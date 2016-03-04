@@ -4,7 +4,7 @@
     <Position X="0.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAMEAIAAAAAAACAAQAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>Match.cs</FileName>
+      <FileName>Classes\Match.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="evolutionSoccer.Program" Collapsed="true">
@@ -17,25 +17,39 @@
   <Class Name="evolutionSoccer.Season">
     <Position X="0.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgIAAAgAAAAECAAQAAAAAAAAIAAQAAA=</HashCode>
-      <FileName>Season.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAgIAAAgABAAECAAQAAAAAAAAIAAQAAA=</HashCode>
+      <FileName>Classes\Season.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="evolutionSoccer.Team">
-    <Position X="4" Y="0.5" Width="1.5" />
+    <Position X="2.5" Y="0.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
       <Delegate Name="evolutionSoccer.Team.formula" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>Team.cs</NewMemberFileName>
+          <NewMemberFileName>Classes\Team.cs</NewMemberFileName>
         </TypeIdentifier>
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
       <HashCode>CAAAIAgDAAAIABABIAAApAAEIIAEAAgQgAAAYAAAAAE=</HashCode>
-      <FileName>Team.cs</FileName>
+      <FileName>Classes\Team.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="evolutionSoccer.StatsRecorder">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\StatsRecorder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="evolutionSoccer.GraphicsForm">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EACAAAAAACABAAAAAACAAAgCAAAYQAgAAGAAAAAAAAA=</HashCode>
+      <FileName>Forms\GraphicsForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

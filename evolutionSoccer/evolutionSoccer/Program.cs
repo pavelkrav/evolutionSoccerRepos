@@ -8,12 +8,10 @@ namespace evolutionSoccer
         [STAThread]
         static void Main()
         {
-            Season series1 = new Season("Russia", "Brasil", 200);            
-            series1.printTeams();
-            series1.simulateSeason();
-            series1.printTeams();
+            Season season1 = new Season("Russia", "Brasil", 200);            
+            season1.simulateSeason();
             Application.EnableVisualStyles();
-            Application.Run(new GraphicsForm());
+            Application.Run(new GraphicsForm(season1._statsRecorder));
             Console.ReadKey();
 
             //for (int i = 0; i < 35; i++) // Testing scores
