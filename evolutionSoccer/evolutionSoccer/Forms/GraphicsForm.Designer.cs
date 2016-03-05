@@ -94,8 +94,9 @@
             this.ClientSize = new System.Drawing.Size(959, 517);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "GraphicsForm";
-            this.Text = "GraphicsForm";
+            this.Text = "Graphs Form";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

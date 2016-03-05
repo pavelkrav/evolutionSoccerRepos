@@ -60,12 +60,12 @@ namespace evolutionSoccer
 
             // remold negative field in case of window size changing
             negField = negativeField();
-            // y axis
+            // y-axis
             graphics.DrawLine(System.Drawing.Pens.Black, new Point(negField, 0), new Point(negField, this.Height));
-            // x axis
+            // x-axis
             graphics.DrawLine(System.Drawing.Pens.Black, new Point(0, this.Height - 38 - negField), new Point(this.Width, this.Height - 38 - negField)); // x axis
 
-            //x axis labels
+            //x-axis labels
             for (int i = 0; i < 9; i++)
             {
                 int x = (this.Width - negField) * (i + 1) / 10 + negField;
@@ -79,13 +79,22 @@ namespace evolutionSoccer
             }
             //zero point label
             graphics.DrawString("0", new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Regular), Brushes.Black, new Point(negField - 12, this.Height - negField - 32));
+            graphics.DrawString("Matches", new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Regular), Brushes.Black, new Point(this.Width - 80, this.Height - negField - 20));
         }
 
-        public void drawLine(double x1, double y1, double x2, double y2, Pen colour) // should be private later
+        private void drawLine(double x1, double y1, double x2, double y2, Pen colour)
         {
             System.Drawing.Graphics graphics = this.CreateGraphics();
             negField = negativeField();
             graphics.DrawLine(colour, new Point(negField + Convert.ToInt32(x1), this.Height - 38 - negField - Convert.ToInt32(y1)), new Point(negField + Convert.ToInt32(x2), this.Height - 38 - negField - Convert.ToInt32(y2)));
+        }
+
+        private void drawTeamStrengthGraph(int teamNumber, Pen colour)
+        {
+            if (teamNumber == 0 || teamNumber == 1)
+            {
+
+            }
         }
 
         private void clearGraphsToolStripMenuItem_Click(object sender, EventArgs e)

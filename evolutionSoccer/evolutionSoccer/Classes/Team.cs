@@ -140,6 +140,24 @@ namespace evolutionSoccer
             Console.WriteLine("\nTotal:     \t{0}\n", teamStrength);
         }
 
+        public void printTeam(String message)
+        {
+            Console.WriteLine("Team \"{0}\" " + message, name);
+            Console.WriteLine("Goalkeeper:\t{0}", this.gk);
+            Console.Write("Defence:   \t");
+            for (int i = 0; i < this.defSize; i++)
+                Console.Write("{0}\t", def[i]);
+            Console.WriteLine();
+            Console.Write("Center:    \t");
+            for (int i = 0; i < this.cenSize; i++)
+                Console.Write("{0}\t", cen[i]);
+            Console.WriteLine();
+            Console.Write("Attack:    \t");
+            for (int i = 0; i < this.attSize; i++)
+                Console.Write("{0}\t", att[i]);
+            Console.WriteLine("\nTotal:     \t{0}\n", teamStrength);
+        }
+
 
         public Team()
         {

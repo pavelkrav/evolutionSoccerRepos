@@ -7,7 +7,7 @@ namespace evolutionSoccer
         private Team[] team;
         public int totalMatches { get; }
         private int playedMatches;
-        private int[] wins;
+        private int[] wins; // wins[2] = draws
         public StatsRecorder _statsRecorder { get; }
 
         public Season (string team1, string team2, int matches)
@@ -21,8 +21,6 @@ namespace evolutionSoccer
 
             _statsRecorder = new StatsRecorder(totalMatches);
             recordStats();
-
-            printTeams();
         }
 
         private void recordStats()
@@ -45,6 +43,12 @@ namespace evolutionSoccer
         {
             team[0].printTeam();
             team[1].printTeam();
+        }
+
+        public void printTeams(String message)
+        {
+            team[0].printTeam(message);
+            team[1].printTeam(message);
         }
 
         private int simulateMatch()
@@ -89,9 +93,9 @@ namespace evolutionSoccer
         public void simulateSeason()
         {
             simulateSeries(totalMatches);
+            printTeams("(at the ending of the season):");
             Console.WriteLine("Total in season:\n{0}  {1} - {2}  {3}\nDraws - {4}\n", team[0].name, wins[0], wins[1], team[1].name, wins[2]);
-            recordStats();
-            printTeams();
+            recordStats();            
         }
 
     }
