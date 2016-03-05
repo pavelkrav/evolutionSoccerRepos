@@ -5,7 +5,7 @@ namespace evolutionSoccer
     class Season
     {
         private Team[] team;
-        private int totalMatches;
+        public int totalMatches { get; }
         private int playedMatches;
         private int[] wins;
         public StatsRecorder _statsRecorder { get; }
@@ -18,8 +18,27 @@ namespace evolutionSoccer
             team = new Team[2];
             team[0] = new Team(team1, 15, 5); // initial conditions
             team[1] = new Team(team2, 15, 5); // initial conditions
+
             _statsRecorder = new StatsRecorder(totalMatches);
+            recordStats();
+
             printTeams();
+        }
+
+        private void recordStats()
+        {
+            int i = _statsRecorder.currentRecords;
+
+            if (i < Convert.ToInt32(Math.Floor(1.0 * totalMatches / _statsRecorder.frequency)) + 2)
+            {
+                _statsRecorder.matchesPlayed[i] = playedMatches;
+
+                _statsRecorder.teamStrength[0, i] = team[0].teamStrength;
+                _statsRecorder.teamStrength[1, i] = team[1].teamStrength;
+                //...
+            }
+
+            _statsRecorder.currentRecords++;
         }
 
         public void printTeams()
@@ -48,6 +67,12 @@ namespace evolutionSoccer
                 wins[2]++;
             }
             playedMatches++;
+
+            if (playedMatches % _statsRecorder.frequency == 0)
+            {
+                recordStats();
+            }
+
             return match.winner;
         }
 
@@ -65,6 +90,7 @@ namespace evolutionSoccer
         {
             simulateSeries(totalMatches);
             Console.WriteLine("Total in season:\n{0}  {1} - {2}  {3}\nDraws - {4}\n", team[0].name, wins[0], wins[1], team[1].name, wins[2]);
+            recordStats();
             printTeams();
         }
 

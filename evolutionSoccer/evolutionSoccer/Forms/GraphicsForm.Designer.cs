@@ -28,29 +28,63 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.graphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearGraphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.teamStrengthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // menuStrip1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 451);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(125, 34);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Clear Graphs";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.graphsToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(959, 24);
+            this.menuStrip1.TabIndex = 3;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // button2
+            // graphsToolStripMenuItem
             // 
-            this.button2.Location = new System.Drawing.Point(153, 454);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(129, 31);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Testing stuff";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.graphsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearGraphsToolStripMenuItem,
+            this.teamStrengthToolStripMenuItem});
+            this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
+            this.graphsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.graphsToolStripMenuItem.Text = "Graphs";
+            // 
+            // clearGraphsToolStripMenuItem
+            // 
+            this.clearGraphsToolStripMenuItem.Name = "clearGraphsToolStripMenuItem";
+            this.clearGraphsToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.clearGraphsToolStripMenuItem.Text = "Clear graphs";
+            this.clearGraphsToolStripMenuItem.Click += new System.EventHandler(this.clearGraphsToolStripMenuItem_Click);
+            // 
+            // teamStrengthToolStripMenuItem
+            // 
+            this.teamStrengthToolStripMenuItem.Name = "teamStrengthToolStripMenuItem";
+            this.teamStrengthToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.teamStrengthToolStripMenuItem.Text = "Team strength";
+            this.teamStrengthToolStripMenuItem.Click += new System.EventHandler(this.teamStrengthToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openGuideToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // openGuideToolStripMenuItem
+            // 
+            this.openGuideToolStripMenuItem.Name = "openGuideToolStripMenuItem";
+            this.openGuideToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.openGuideToolStripMenuItem.Text = "Open guide";
+            this.openGuideToolStripMenuItem.Click += new System.EventHandler(this.openGuideToolStripMenuItem_Click);
             // 
             // GraphicsForm
             // 
@@ -58,17 +92,23 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ClientSize = new System.Drawing.Size(959, 517);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "GraphicsForm";
             this.Text = "GraphicsForm";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem graphsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearGraphsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem teamStrengthToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openGuideToolStripMenuItem;
     }
 }

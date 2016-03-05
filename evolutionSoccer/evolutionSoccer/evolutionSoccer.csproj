@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="info\Planning.txt" />
+    <Content Include="info\Guide.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\GraphicsForm.resx">
