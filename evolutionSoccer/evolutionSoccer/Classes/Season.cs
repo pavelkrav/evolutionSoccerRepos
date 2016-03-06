@@ -18,7 +18,7 @@ namespace evolutionSoccer
             team = new Team[2];
             team[0] = new Team(team1, 15, 5); // initial conditions
             team[1] = new Team(team2, 15, 5); // initial conditions
-
+            printTeams("(at the beginning of the season):");
             _statsRecorder = new StatsRecorder(totalMatches);
             recordStats();
         }
@@ -90,11 +90,16 @@ namespace evolutionSoccer
             }
         }
 
+        public void printScore()
+        {
+            Console.WriteLine("Total in season:\n{0}  {1} - {2}  {3}\nDraws - {4}\n", team[0].name, wins[0], wins[1], team[1].name, wins[2]);
+        }
+
         public void simulateSeason()
         {
             simulateSeries(totalMatches);
             printTeams("(at the ending of the season):");
-            Console.WriteLine("Total in season:\n{0}  {1} - {2}  {3}\nDraws - {4}\n", team[0].name, wins[0], wins[1], team[1].name, wins[2]);
+            printScore();
             recordStats();            
         }
 

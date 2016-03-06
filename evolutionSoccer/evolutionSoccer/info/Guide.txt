@@ -1,1 +1,15 @@
 ﻿Hi there!
+Here will be a little guide over this application later.
+
+
+Used and learned stuff:
+
+catching exceptions,
+delegates and lambda expressions,
+events,
+windows forms over console application,
+windows forms themselves,
+Process.Start(path),
+random in loop,
+relative addressing,
+...

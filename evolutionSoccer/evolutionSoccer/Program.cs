@@ -25,6 +25,7 @@ namespace evolutionSoccer
             season = new Season(teamName1, teamName2, matches);
         }
 
+        [STAThread]
         private void Menu()
         {
             int sw = 1;
@@ -37,20 +38,33 @@ namespace evolutionSoccer
                         break;
                     case 1:
                         Console.Clear();
-                        season.printTeams("(at the beginning of the season):");
+                        season = new Season(teamName1, teamName2, matches);
                         season.simulateSeason();
                         Console.WriteLine("Press any key... ");
                         Console.ReadKey();
                         break;
                     case 2:
                         Console.Clear();
-                        Console.Write("Input new season length... ");
-                        matches = int.Parse(Console.ReadLine());
-                        season = new Season(teamName1, teamName2, matches);
-                        break;
+                        season.printTeams();
+                        season.printScore();
+                        Console.WriteLine("Press any key... ");
+                        Console.ReadKey();
+                        break;                    
                     case 3:
+                        //for (int i = 0; i < season._statsRecorder.matchesPlayed.GetLength(0); i++) // checking plausibility of graphs
+                        //    Console.WriteLine("{0}   {1}", season._statsRecorder.teamStrength[0, i], season._statsRecorder.teamStrength[1, i]);
                         Application.EnableVisualStyles();
                         Application.Run(new GraphicsForm(season._statsRecorder));
+                        break;
+                    case 4:
+                        Console.Clear();
+                        Console.Write("Input new season length... ");
+                        int n = int.Parse(Console.ReadLine()); // need exception here
+                        if (n > 0)
+                        {
+                            matches = n;
+                            season = new Season(teamName1, teamName2, matches);
+                        }
                         break;
                     default:
                         Console.Clear();
@@ -64,8 +78,9 @@ namespace evolutionSoccer
             Console.Clear();
             Console.WriteLine("Main Menu");
             Console.WriteLine("1 - Run new simulation ({0} matches)", matches);
-            Console.WriteLine("2 - Change season length");
+            Console.WriteLine("2 - Show last season statistics");
             Console.WriteLine("3 - Show graphs");
+            Console.WriteLine("4 - Change season length"); 
 
             Console.WriteLine("0 - Exit\n");
             Console.Write("Go to... ");
