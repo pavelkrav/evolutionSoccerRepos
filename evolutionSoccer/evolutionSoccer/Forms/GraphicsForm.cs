@@ -182,6 +182,7 @@ namespace evolutionSoccer
                 drawTeamStrengthGraph(0, Pens.Blue);
                 drawTeamStrengthGraph(1, Pens.Red);
             };
+            Console.WriteLine("Building graph showing teams strength through simulated matches");
             lastGraph();
         }
 

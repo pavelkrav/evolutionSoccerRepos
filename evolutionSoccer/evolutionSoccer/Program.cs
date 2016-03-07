@@ -9,6 +9,9 @@ namespace evolutionSoccer
         private String teamName2;
         private int matches;
         private Season season;
+        private bool isSimulated;
+
+        private delegate int menuDelegate();
 
         [STAThread]
         static void Main()
@@ -23,15 +26,20 @@ namespace evolutionSoccer
             teamName2 = "Brazil";
             matches = 400;
             season = new Season(teamName1, teamName2, matches);
+            isSimulated = false;
         }
 
-        [STAThread]
         private void Menu()
         {
+            menuDelegate menu = null;
             int sw = 1;
             while (sw != 0)
             {
-                switch (mainMenu())
+                if (isSimulated)
+                    menu = mainMenu2;
+                else
+                    menu = mainMenu1;
+                switch (menu())
                 {
                     case 0:
                         sw = 0;
@@ -40,6 +48,7 @@ namespace evolutionSoccer
                         Console.Clear();
                         season = new Season(teamName1, teamName2, matches);
                         season.simulateSeason();
+                        isSimulated = true;
                         Console.WriteLine("Press any key... ");
                         Console.ReadKey();
                         break;
@@ -73,26 +82,58 @@ namespace evolutionSoccer
             }
         }
 
-        private int mainMenu()
+        private int mainMenu1()
         {
+            int[] choice = new int[3] { 0, 1, 4 };
+            Console.Clear();
+            Console.WriteLine("Main Menu");
+            Console.WriteLine("1 - Run new simulation ({0} matches)", matches);
+            Console.WriteLine("2 - Change season length"); 
+
+            Console.WriteLine("0 - Exit\n");
+            Console.Write("Go to... ");
+
+            int rt = choice[0];
+            try
+            {
+                rt = choice[int.Parse(Console.ReadLine())];
+            }
+            catch (System.FormatException)
+            {
+                return mainMenu1();
+            }
+            catch (System.IndexOutOfRangeException)
+            {
+                return mainMenu1();
+            }
+            return rt;
+        }
+
+        private int mainMenu2()
+        {
+            int[] choice = new int[5] { 0, 1, 2, 3, 4 };
             Console.Clear();
             Console.WriteLine("Main Menu");
             Console.WriteLine("1 - Run new simulation ({0} matches)", matches);
             Console.WriteLine("2 - Show last season statistics");
             Console.WriteLine("3 - Show graphs");
-            Console.WriteLine("4 - Change season length"); 
+            Console.WriteLine("4 - Change season length");
 
             Console.WriteLine("0 - Exit\n");
             Console.Write("Go to... ");
 
-            int rt = 0;
+            int rt = choice[0];
             try
             {
-                rt = int.Parse(Console.ReadLine());
+                rt = choice[int.Parse(Console.ReadLine())];
             }
-            catch(System.FormatException)
+            catch (System.FormatException)
             {
-                    return mainMenu();
+                return mainMenu2();
+            }
+            catch (System.IndexOutOfRangeException)
+            {
+                return mainMenu2();
             }
             return rt;
         }
