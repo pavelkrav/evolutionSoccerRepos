@@ -33,6 +33,9 @@ namespace evolutionSoccer
 
                 _statsRecorder.teamStrength[0, i] = team[0].teamStrength;
                 _statsRecorder.teamStrength[1, i] = team[1].teamStrength;
+
+                _statsRecorder.wins[0, i] = team[0].wins;
+                _statsRecorder.wins[1, i] = team[1].wins;
                 //...
             }
 

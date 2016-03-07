@@ -34,6 +34,7 @@
             this.teamStrengthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.winsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,7 +53,8 @@
             // 
             this.graphsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearGraphsToolStripMenuItem,
-            this.teamStrengthToolStripMenuItem});
+            this.teamStrengthToolStripMenuItem,
+            this.winsToolStripMenuItem});
             this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
             this.graphsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.graphsToolStripMenuItem.Text = "Graphs";
@@ -60,14 +62,14 @@
             // clearGraphsToolStripMenuItem
             // 
             this.clearGraphsToolStripMenuItem.Name = "clearGraphsToolStripMenuItem";
-            this.clearGraphsToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.clearGraphsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clearGraphsToolStripMenuItem.Text = "Clear graphs";
             this.clearGraphsToolStripMenuItem.Click += new System.EventHandler(this.clearGraphsToolStripMenuItem_Click);
             // 
             // teamStrengthToolStripMenuItem
             // 
             this.teamStrengthToolStripMenuItem.Name = "teamStrengthToolStripMenuItem";
-            this.teamStrengthToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.teamStrengthToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.teamStrengthToolStripMenuItem.Text = "Team strength";
             this.teamStrengthToolStripMenuItem.Click += new System.EventHandler(this.teamStrengthToolStripMenuItem_Click);
             // 
@@ -85,6 +87,13 @@
             this.openGuideToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.openGuideToolStripMenuItem.Text = "Open guide";
             this.openGuideToolStripMenuItem.Click += new System.EventHandler(this.openGuideToolStripMenuItem_Click);
+            // 
+            // winsToolStripMenuItem
+            // 
+            this.winsToolStripMenuItem.Name = "winsToolStripMenuItem";
+            this.winsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.winsToolStripMenuItem.Text = "Wins";
+            this.winsToolStripMenuItem.Click += new System.EventHandler(this.winsToolStripMenuItem_Click);
             // 
             // GraphicsForm
             // 
@@ -111,5 +120,6 @@
         private System.Windows.Forms.ToolStripMenuItem teamStrengthToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openGuideToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem winsToolStripMenuItem;
     }
 }

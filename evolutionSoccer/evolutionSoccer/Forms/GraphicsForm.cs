@@ -169,6 +169,30 @@ namespace evolutionSoccer
             }
         }
 
+        private void drawWinsGraph(int teamNumber, Pen colour)
+        {
+            if (teamNumber == 0 || teamNumber == 1)
+            {
+                int maxY = _statsRecorder.wins[0, 0];
+                for (int i = 0; i < _statsRecorder.wins.GetLength(1); i++)
+                {
+                    if (maxY < _statsRecorder.wins[0, i])
+                        maxY = _statsRecorder.wins[0, i];
+                    if (maxY < _statsRecorder.wins[1, i])
+                        maxY = _statsRecorder.wins[1, i];
+                }
+
+                drawYaxisLabels(maxY);
+
+                double ratioX = 1.0 * (this.Width - negField) / _statsRecorder.matchesPlayed[_statsRecorder.currentRecords - 1];
+                double ratioY = 1.0 * (this.Height - 98 - negField) / maxY;//////
+                for (int i = 0; i < _statsRecorder.matchesPlayed.GetLength(0) - 1; i++)
+                {
+                    drawLine(_statsRecorder.matchesPlayed[i] * ratioX, _statsRecorder.wins[teamNumber, i] * ratioY, _statsRecorder.matchesPlayed[i + 1] * ratioX, _statsRecorder.wins[teamNumber, i + 1] * ratioY, colour);
+                }
+            }
+        }
+
         private void clearGraphsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             drawCross("clear");
@@ -191,6 +215,18 @@ namespace evolutionSoccer
             //string path = AppDomain.CurrentDomain.BaseDirectory;
             //Console.WriteLine(path);
             Process.Start("..\\..\\info\\Guide.txt");
+        }
+
+        private void winsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lastGraph = () =>
+            {
+                drawCross("clear");
+                drawWinsGraph(0, Pens.Blue);
+                drawWinsGraph(1, Pens.Red);
+            };
+            Console.WriteLine("Building graph showing wins through simulated matches");
+            lastGraph();
         }
     }
 }

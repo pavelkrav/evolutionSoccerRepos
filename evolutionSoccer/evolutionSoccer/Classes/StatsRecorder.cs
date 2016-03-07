@@ -9,6 +9,7 @@ namespace evolutionSoccer
 
         public int[] matchesPlayed { get; set; }
         public int[,] teamStrength { get; set;}
+        public int[,] wins { get; set; }
         public int frequency { get; }
         public int currentRecords { get; set; }
 
@@ -23,7 +24,8 @@ namespace evolutionSoccer
 
             int c = Convert.ToInt32(Math.Floor(1.0 * totalMatches / frequency)) + 2;
             matchesPlayed = new int[c];
-            teamStrength = new int[2,c];
+            teamStrength = new int[2, c];
+            wins = new int[2, c];
         }
     }
 }
