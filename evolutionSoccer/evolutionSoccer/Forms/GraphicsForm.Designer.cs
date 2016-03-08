@@ -32,9 +32,10 @@
             this.graphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearGraphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.teamStrengthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.winsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.winsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.drawsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,7 +55,8 @@
             this.graphsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearGraphsToolStripMenuItem,
             this.teamStrengthToolStripMenuItem,
-            this.winsToolStripMenuItem});
+            this.winsToolStripMenuItem,
+            this.drawsToolStripMenuItem});
             this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
             this.graphsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.graphsToolStripMenuItem.Text = "Graphs";
@@ -73,6 +75,13 @@
             this.teamStrengthToolStripMenuItem.Text = "Team strength";
             this.teamStrengthToolStripMenuItem.Click += new System.EventHandler(this.teamStrengthToolStripMenuItem_Click);
             // 
+            // winsToolStripMenuItem
+            // 
+            this.winsToolStripMenuItem.Name = "winsToolStripMenuItem";
+            this.winsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.winsToolStripMenuItem.Text = "Wins";
+            this.winsToolStripMenuItem.Click += new System.EventHandler(this.winsToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -84,16 +93,16 @@
             // openGuideToolStripMenuItem
             // 
             this.openGuideToolStripMenuItem.Name = "openGuideToolStripMenuItem";
-            this.openGuideToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.openGuideToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openGuideToolStripMenuItem.Text = "Open guide";
             this.openGuideToolStripMenuItem.Click += new System.EventHandler(this.openGuideToolStripMenuItem_Click);
             // 
-            // winsToolStripMenuItem
+            // drawsToolStripMenuItem
             // 
-            this.winsToolStripMenuItem.Name = "winsToolStripMenuItem";
-            this.winsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.winsToolStripMenuItem.Text = "Wins";
-            this.winsToolStripMenuItem.Click += new System.EventHandler(this.winsToolStripMenuItem_Click);
+            this.drawsToolStripMenuItem.Name = "drawsToolStripMenuItem";
+            this.drawsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.drawsToolStripMenuItem.Text = "Draws";
+            this.drawsToolStripMenuItem.Click += new System.EventHandler(this.drawsToolStripMenuItem_Click);
             // 
             // GraphicsForm
             // 
@@ -121,5 +130,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openGuideToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem winsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem drawsToolStripMenuItem;
     }
 }

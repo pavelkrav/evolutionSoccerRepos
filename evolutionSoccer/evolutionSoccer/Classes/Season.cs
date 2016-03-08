@@ -23,6 +23,7 @@ namespace evolutionSoccer
             recordStats();
         }
 
+        // stats recording method
         private void recordStats()
         {
             int i = _statsRecorder.currentRecords;
@@ -36,6 +37,8 @@ namespace evolutionSoccer
 
                 _statsRecorder.wins[0, i] = team[0].wins;
                 _statsRecorder.wins[1, i] = team[1].wins;
+
+                _statsRecorder.draws[i] = wins[2];
                 //...
             }
 

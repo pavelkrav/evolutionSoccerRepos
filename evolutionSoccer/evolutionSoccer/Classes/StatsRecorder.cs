@@ -10,6 +10,7 @@ namespace evolutionSoccer
         public int[] matchesPlayed { get; set; }
         public int[,] teamStrength { get; set;}
         public int[,] wins { get; set; }
+        public int[] draws { get; set; }
         public int frequency { get; }
         public int currentRecords { get; set; }
 
@@ -26,6 +27,7 @@ namespace evolutionSoccer
             matchesPlayed = new int[c];
             teamStrength = new int[2, c];
             wins = new int[2, c];
+            draws = new int[c];
         }
     }
 }

@@ -18,8 +18,8 @@ namespace evolutionSoccer
 
         // delegate for refreshing graphs on window size changing
         // lastGraph resets in every graph-drawing method
-        private delegate void drawGraph();
-        private drawGraph lastGraph;
+        private delegate void graphDelegate();
+        private graphDelegate lastGraph;
 
         public GraphicsForm()
         {
@@ -120,7 +120,7 @@ namespace evolutionSoccer
         private void drawYaxisLabels(int maxY)
         {
             System.Drawing.Graphics graphics = this.CreateGraphics();
-            for (int i = 0; i < 10; i++)/////
+            for (int i = 0; i < 10; i++)
             {
                 if (_statsRecorder != null)
                 {
@@ -138,6 +138,7 @@ namespace evolutionSoccer
             }
         }
 
+        // draw a line about the coordinate system, not the form
         private void drawLine(double x1, double y1, double x2, double y2, Pen colour)
         {
             System.Drawing.Graphics graphics = this.CreateGraphics();
@@ -145,52 +146,65 @@ namespace evolutionSoccer
             graphics.DrawLine(colour, new Point(negField + Convert.ToInt32(x1), this.Height - 38 - negField - Convert.ToInt32(y1)), new Point(negField + Convert.ToInt32(x2), this.Height - 38 - negField - Convert.ToInt32(y2)));
         }
 
+        private void drawGraph(int[,] statsArray, int teamNumber, Pen colour)
+        {
+            int maxY = statsArray[0, 0];
+            for (int i = 0; i < statsArray.GetLength(1); i++)
+            {
+                if (maxY < statsArray[0, i])
+                    maxY = statsArray[0, i];
+                if (maxY < statsArray[1, i])
+                    maxY = statsArray[1, i];
+            }
+
+            drawYaxisLabels(maxY);
+
+            double ratioX = 1.0 * (this.Width - negField) / _statsRecorder.matchesPlayed[_statsRecorder.currentRecords - 1];
+            double ratioY = 1.0 * (this.Height - 98 - negField) / maxY;
+            for (int i = 0; i < _statsRecorder.matchesPlayed.GetLength(0) - 1; i++)
+            {
+                drawLine(_statsRecorder.matchesPlayed[i] * ratioX, statsArray[teamNumber, i] * ratioY, _statsRecorder.matchesPlayed[i + 1] * ratioX, statsArray[teamNumber, i + 1] * ratioY, colour);
+            }
+        }
+
+        private void drawGraph(int[] statsArray, Pen colour)
+        {
+            int maxY = statsArray[0];
+            for (int i = 0; i < statsArray.GetLength(0); i++)
+            {
+                if (maxY < statsArray[i])
+                    maxY = statsArray[i];
+            }
+
+            drawYaxisLabels(maxY);
+
+            double ratioX = 1.0 * (this.Width - negField) / _statsRecorder.matchesPlayed[_statsRecorder.currentRecords - 1];
+            double ratioY = 1.0 * (this.Height - 98 - negField) / maxY;
+            for (int i = 0; i < _statsRecorder.matchesPlayed.GetLength(0) - 1; i++)
+            {
+                drawLine(_statsRecorder.matchesPlayed[i] * ratioX, statsArray[i] * ratioY, _statsRecorder.matchesPlayed[i + 1] * ratioX, statsArray[i + 1] * ratioY, colour);
+            }
+        }
+
         private void drawTeamStrengthGraph(int teamNumber, Pen colour)
         {
-            if (teamNumber == 0 || teamNumber == 1)
+            if (teamNumber < _statsRecorder.teamStrength.GetLength(0) && teamNumber >= 0)
             {
-                int maxY = _statsRecorder.teamStrength[0, 0];
-                for (int i = 0; i < _statsRecorder.teamStrength.GetLength(1); i++)
-                {
-                    if (maxY < _statsRecorder.teamStrength[0, i])
-                        maxY = _statsRecorder.teamStrength[0, i];
-                    if (maxY < _statsRecorder.teamStrength[1, i])
-                        maxY = _statsRecorder.teamStrength[1, i];
-                }
-
-                drawYaxisLabels(maxY);
-
-                double ratioX = 1.0 * (this.Width - negField) / _statsRecorder.matchesPlayed[_statsRecorder.currentRecords - 1];
-                double ratioY = 1.0 * (this.Height - 98 - negField) / maxY;//////
-                for (int i = 0; i < _statsRecorder.matchesPlayed.GetLength(0) - 1; i++)
-                {
-                    drawLine(_statsRecorder.matchesPlayed[i] * ratioX, _statsRecorder.teamStrength[teamNumber,i] * ratioY, _statsRecorder.matchesPlayed[i+1] * ratioX, _statsRecorder.teamStrength[teamNumber, i+1] * ratioY, colour);
-                }
+                drawGraph(_statsRecorder.teamStrength, teamNumber, colour);
             }
         }
 
         private void drawWinsGraph(int teamNumber, Pen colour)
         {
-            if (teamNumber == 0 || teamNumber == 1)
+            if (teamNumber < _statsRecorder.wins.GetLength(0) && teamNumber >= 0)
             {
-                int maxY = _statsRecorder.wins[0, 0];
-                for (int i = 0; i < _statsRecorder.wins.GetLength(1); i++)
-                {
-                    if (maxY < _statsRecorder.wins[0, i])
-                        maxY = _statsRecorder.wins[0, i];
-                    if (maxY < _statsRecorder.wins[1, i])
-                        maxY = _statsRecorder.wins[1, i];
-                }
-
-                drawYaxisLabels(maxY);
-
-                double ratioX = 1.0 * (this.Width - negField) / _statsRecorder.matchesPlayed[_statsRecorder.currentRecords - 1];
-                double ratioY = 1.0 * (this.Height - 98 - negField) / maxY;//////
-                for (int i = 0; i < _statsRecorder.matchesPlayed.GetLength(0) - 1; i++)
-                {
-                    drawLine(_statsRecorder.matchesPlayed[i] * ratioX, _statsRecorder.wins[teamNumber, i] * ratioY, _statsRecorder.matchesPlayed[i + 1] * ratioX, _statsRecorder.wins[teamNumber, i + 1] * ratioY, colour);
-                }
+                drawGraph(_statsRecorder.wins, teamNumber, colour);
             }
+        }
+
+        private void drawDrawsGraph(Pen colour)
+        {
+                drawGraph(_statsRecorder.draws, colour);
         }
 
         private void clearGraphsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -226,6 +240,17 @@ namespace evolutionSoccer
                 drawWinsGraph(1, Pens.Red);
             };
             Console.WriteLine("Building graph showing wins through simulated matches");
+            lastGraph();
+        }
+
+        private void drawsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lastGraph = () =>
+            {
+                drawCross("clear");
+                drawDrawsGraph(Pens.Chocolate);
+            };
+            Console.WriteLine("Building graph showing draws through simulated matches");
             lastGraph();
         }
     }
