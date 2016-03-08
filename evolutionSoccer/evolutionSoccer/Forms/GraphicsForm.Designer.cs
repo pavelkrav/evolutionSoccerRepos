@@ -70,11 +70,11 @@
             // graphsToolStripMenuItem
             // 
             this.graphsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clearGraphsToolStripMenuItem,
             this.teamStrengthToolStripMenuItem,
             this.winsToolStripMenuItem,
             this.drawsToolStripMenuItem,
-            this.looseStreakToolStripMenuItem});
+            this.looseStreakToolStripMenuItem,
+            this.clearGraphsToolStripMenuItem});
             this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
             this.graphsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.graphsToolStripMenuItem.Text = "Graphs";

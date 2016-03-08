@@ -15,7 +15,7 @@
 Добавление новых графиков: Processing
 	Wins. Done
 	Draws. Done
-	Loose streak. Done
+	Loose streak. Бредовый график - нужно либо удалять, либо сильно менять.
 	Sizes of roles.
 Метод построения графиков по массивам. Done
 	Двумерный массив. Done

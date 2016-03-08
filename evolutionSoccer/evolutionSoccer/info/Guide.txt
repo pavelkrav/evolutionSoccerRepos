@@ -1,5 +1,29 @@
 ﻿Hi there!
-Here will be a little guide over this application later.
+This application simulates a series of football matches between two teams.
+
+After any team looses, its' parameters randomly changing using an evolution algorithm.
+Changes are based on loose streak of the team and its' win/loose ratio. 
+Loose streak affects on descendants amount and strategy changes. W/L ratio - on parameters' shift value.
+
+Match is simulated according to teams' parameters.
+Maintainly:	center affects on attacks amount;
+		attack affects on chance to shoot on target;
+		defence lowers this chance for enemy;
+		goalkeepers' strength is affects on chance to save.
+
+First of all you need to simulate a season (input 1 in menu).
+By default you are offered to simulate 800 matches. But you can change this number.
+While it is simulating, you can see starting and final teams parameters and tactics.
+After you simulated a season you can open a graphs building form (input 3) or simulate a new one.
+
+While using graphs form:
+There is a menu strip.
+"Graphs" branch obviously allows you to build graphs or clear the coordinate field.
+"Colour" branch allows you to change colours of teams' graphs separately.
+Also, you can change size of window with no harm.
+
+It is not fully balanced yet, but results of matches are close to real ones, so I hope you will enjoy this stuff.
+
 
 
 Used and learned stuff:
@@ -7,10 +31,11 @@ Used and learned stuff:
 catching exceptions,
 delegates and lambda expressions,
 events,
+inheritance and overrides,
 windows forms over console application,
 windows forms themselves,
 Process.Start(path),
 random in loop,
 relative addressing,
 ...
-and all that stuff.
+to be continued
