@@ -7,7 +7,7 @@ using System.IO;
 namespace evolutionSoccer
 {
     public partial class GraphicsForm : Form
-    {        
+    {
         private StatsRecorder _statsRecorder;
 
         // negative field // setted by private int negativeField() method
@@ -18,8 +18,12 @@ namespace evolutionSoccer
 
         // delegate for refreshing graphs on window size changing
         // lastGraph resets in every graph-drawing method
-        private delegate void graphDelegate();
+        // it records last graph drawing method
+        // pens are containing colours both teams' graphs will be drawn with
+        private delegate void graphDelegate(Pen colour1, Pen colour2);
         private graphDelegate lastGraph;
+        private Pen teamColour1;
+        private Pen teamColour2;
 
         public GraphicsForm()
         {
@@ -28,7 +32,9 @@ namespace evolutionSoccer
             _statsRecorder = null;
             negField = negativeField();
 
-            lastGraph = () =>
+            teamColour1 = Pens.Blue;
+            teamColour2 = Pens.Red;
+            lastGraph = (teamColour1, teamColour2) =>
             {
                 drawCross("clear");
             };
@@ -41,7 +47,9 @@ namespace evolutionSoccer
             this._statsRecorder = _statsRecorder;
             negField = negativeField();
 
-            lastGraph = () =>
+            teamColour1 = Pens.Blue;
+            teamColour2 = Pens.Red;
+            lastGraph = (teamColour1, teamColour2) =>
             {
                 drawCross("clear");
             };
@@ -68,7 +76,7 @@ namespace evolutionSoccer
         {
             base.OnSizeChanged(e);
             if (lastGraph != null)
-                lastGraph();
+                lastGraph(teamColour1, teamColour2);
             else
                 drawCross("clear");
         }
@@ -88,16 +96,16 @@ namespace evolutionSoccer
             // x-axis
             graphics.DrawLine(System.Drawing.Pens.Black, new Point(0, this.Height - 38 - negField), new Point(this.Width, this.Height - 38 - negField)); // x axis
 
-            drawXaxisLabels();  
+            drawXaxisLabels();
         }
 
         // x-axis labels
         private void drawXaxisLabels()
         {
             System.Drawing.Graphics graphics = this.CreateGraphics();
-            for (int i = 0; i < 9; i++)
+            if (_statsRecorder != null)
             {
-                if (_statsRecorder != null)
+                for (int i = 0; i < 9; i++)
                 {
                     string label = null;
                     if (_statsRecorder.matchesPlayed[_statsRecorder.currentRecords - 1] >= 50)
@@ -120,69 +128,91 @@ namespace evolutionSoccer
         private void drawYaxisLabels(int maxY)
         {
             System.Drawing.Graphics graphics = this.CreateGraphics();
-            for (int i = 0; i < 10; i++)
+            if (maxY > 0)
             {
-                if (_statsRecorder != null)
+                for (int i = 0; i < 10; i++)
                 {
                     string label = null;
                     if (maxY >= 50)
                         label = Convert.ToString(maxY * (i + 1) / 10);
                     else
                         label = Convert.ToString(maxY * (i + 1) / 10.0);
-                    int x = negField - 4 - label.Length * 6; 
+                    int x = negField - 4 - label.Length * 6;
                     int y = (this.Height - 38 - negField) - (this.Height - 98 - negField) * (i + 1) / 10;
-                
+
                     graphics.DrawLine(Pens.Black, new Point(negField - 4, y), new Point(negField + 4, y));         // y-beads           
                     graphics.DrawString(label, new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Regular), Brushes.Black, new Point(x - 8, y - 8));
                 }
+            }
+            else if (maxY == 0)
+            {
+                string label = "1";
+                int x = negField - 4 - label.Length * 6;
+                int y = (this.Height - 38 - negField) - (this.Height - 98 - negField) * 9 / 10;
+
+                graphics.DrawLine(Pens.Black, new Point(negField - 4, y), new Point(negField + 4, y));                   
+                graphics.DrawString(label, new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Regular), Brushes.Black, new Point(x - 8, y - 8));
             }
         }
 
         // draw a line about the coordinate system, not the form
         private void drawLine(double x1, double y1, double x2, double y2, Pen colour)
         {
-            System.Drawing.Graphics graphics = this.CreateGraphics();
-            negField = negativeField();
-            graphics.DrawLine(colour, new Point(negField + Convert.ToInt32(x1), this.Height - 38 - negField - Convert.ToInt32(y1)), new Point(negField + Convert.ToInt32(x2), this.Height - 38 - negField - Convert.ToInt32(y2)));
+            if (colour != null)
+            {
+                System.Drawing.Graphics graphics = this.CreateGraphics();
+                negField = negativeField();
+                graphics.DrawLine(colour, new Point(negField + Convert.ToInt32(x1), this.Height - 38 - negField - Convert.ToInt32(y1)), new Point(negField + Convert.ToInt32(x2), this.Height - 38 - negField - Convert.ToInt32(y2)));
+            }
         }
 
         private void drawGraph(int[,] statsArray, int teamNumber, Pen colour)
         {
-            int maxY = statsArray[0, 0];
-            for (int i = 0; i < statsArray.GetLength(1); i++)
+            if (statsArray.GetLength(0) > 0 && statsArray.GetLength(1) > 0)
             {
-                if (maxY < statsArray[0, i])
-                    maxY = statsArray[0, i];
-                if (maxY < statsArray[1, i])
-                    maxY = statsArray[1, i];
-            }
+                int maxY = statsArray[0, 0];
+                for (int i = 0; i < statsArray.GetLength(1); i++)
+                {
+                    if (maxY < statsArray[0, i])
+                        maxY = statsArray[0, i];
+                    if (maxY < statsArray[1, i])
+                        maxY = statsArray[1, i];
+                }
 
-            drawYaxisLabels(maxY);
+                drawYaxisLabels(maxY);
 
-            double ratioX = 1.0 * (this.Width - negField) / _statsRecorder.matchesPlayed[_statsRecorder.currentRecords - 1];
-            double ratioY = 1.0 * (this.Height - 98 - negField) / maxY;
-            for (int i = 0; i < _statsRecorder.matchesPlayed.GetLength(0) - 1; i++)
-            {
-                drawLine(_statsRecorder.matchesPlayed[i] * ratioX, statsArray[teamNumber, i] * ratioY, _statsRecorder.matchesPlayed[i + 1] * ratioX, statsArray[teamNumber, i + 1] * ratioY, colour);
+                double ratioX = 1.0 * (this.Width - negField) / _statsRecorder.matchesPlayed[_statsRecorder.currentRecords - 1];
+                double ratioY = 0;
+                if (maxY > 0)
+                    ratioY = 1.0 * (this.Height - 98 - negField) / maxY;
+                for (int i = 0; i < _statsRecorder.matchesPlayed.GetLength(0) - 1; i++)
+                {
+                    drawLine(_statsRecorder.matchesPlayed[i] * ratioX, statsArray[teamNumber, i] * ratioY, _statsRecorder.matchesPlayed[i + 1] * ratioX, statsArray[teamNumber, i + 1] * ratioY, colour);
+                }
             }
         }
 
         private void drawGraph(int[] statsArray, Pen colour)
         {
-            int maxY = statsArray[0];
-            for (int i = 0; i < statsArray.GetLength(0); i++)
+            if (statsArray.GetLength(0) > 0)
             {
-                if (maxY < statsArray[i])
-                    maxY = statsArray[i];
-            }
+                int maxY = statsArray[0];
+                for (int i = 0; i < statsArray.GetLength(0); i++)
+                {
+                    if (maxY < statsArray[i])
+                        maxY = statsArray[i];
+                }
 
-            drawYaxisLabels(maxY);
+                drawYaxisLabels(maxY);
 
-            double ratioX = 1.0 * (this.Width - negField) / _statsRecorder.matchesPlayed[_statsRecorder.currentRecords - 1];
-            double ratioY = 1.0 * (this.Height - 98 - negField) / maxY;
-            for (int i = 0; i < _statsRecorder.matchesPlayed.GetLength(0) - 1; i++)
-            {
-                drawLine(_statsRecorder.matchesPlayed[i] * ratioX, statsArray[i] * ratioY, _statsRecorder.matchesPlayed[i + 1] * ratioX, statsArray[i + 1] * ratioY, colour);
+                double ratioX = 1.0 * (this.Width - negField) / _statsRecorder.matchesPlayed[_statsRecorder.currentRecords - 1];
+                double ratioY = 0;
+                if (maxY > 0)
+                    ratioY = 1.0 * (this.Height - 98 - negField) / maxY;
+                for (int i = 0; i < _statsRecorder.matchesPlayed.GetLength(0) - 1; i++)
+                {
+                    drawLine(_statsRecorder.matchesPlayed[i] * ratioX, statsArray[i] * ratioY, _statsRecorder.matchesPlayed[i + 1] * ratioX, statsArray[i + 1] * ratioY, colour);
+                }
             }
         }
 
@@ -204,7 +234,7 @@ namespace evolutionSoccer
 
         private void drawDrawsGraph(Pen colour)
         {
-                drawGraph(_statsRecorder.draws, colour);
+            drawGraph(_statsRecorder.draws, colour);
         }
 
         private void clearGraphsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -214,14 +244,14 @@ namespace evolutionSoccer
 
         private void teamStrengthToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            lastGraph = () =>
+            lastGraph = (teamColour1, teamColour2) =>
             {
                 drawCross("clear");
-                drawTeamStrengthGraph(0, Pens.Blue);
-                drawTeamStrengthGraph(1, Pens.Red);
+                drawTeamStrengthGraph(0, teamColour1);
+                drawTeamStrengthGraph(1, teamColour2);
             };
             Console.WriteLine("Building graph showing teams strength through simulated matches");
-            lastGraph();
+            lastGraph(teamColour1, teamColour2);
         }
 
         private void openGuideToolStripMenuItem_Click(object sender, EventArgs e)
@@ -233,25 +263,109 @@ namespace evolutionSoccer
 
         private void winsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            lastGraph = () =>
+            lastGraph = (teamColour1, teamColour2) =>
             {
                 drawCross("clear");
-                drawWinsGraph(0, Pens.Blue);
-                drawWinsGraph(1, Pens.Red);
+                drawWinsGraph(0, teamColour1);
+                drawWinsGraph(1, teamColour2);
             };
             Console.WriteLine("Building graph showing wins through simulated matches");
-            lastGraph();
+            lastGraph(teamColour1, teamColour2);
         }
 
         private void drawsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            lastGraph = () =>
+            lastGraph = (teamColour1, teamColour2) =>
             {
                 drawCross("clear");
-                drawDrawsGraph(Pens.Chocolate);
+                if (teamColour1 != null)
+                    drawDrawsGraph(teamColour1);
+                else if (teamColour2 != null)
+                    drawDrawsGraph(teamColour2);
+                else drawDrawsGraph(Pens.Black);
             };
             Console.WriteLine("Building graph showing draws through simulated matches");
-            lastGraph();
+            lastGraph(teamColour1, teamColour2);
         }
+
+
+        // block of code that provides changing graphs' colours
+        private void changeColour(int teamNumber, Pen colour)
+        {
+            if (teamNumber == 0)
+            {
+                teamColour1 = colour;
+            }
+            else if (teamNumber == 1)
+                teamColour2 = colour;
+            lastGraph(teamColour1, teamColour2);
+        }
+
+
+
+        private void blueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            changeColour(0, Pens.Blue);
+        }
+
+        private void redToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            changeColour(0, Pens.Red);
+        }
+
+        private void greenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            changeColour(0, Pens.Green);
+        }
+
+        private void orangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            changeColour(0, Pens.Orange);
+        }
+
+        private void violetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            changeColour(0, Pens.Violet);
+        }
+
+        private void noneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            changeColour(0, null);
+        }
+
+
+
+        private void blueToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            changeColour(1, Pens.Blue);
+        }
+
+        private void redToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            changeColour(1, Pens.Red);
+        }
+
+        private void greenToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            changeColour(1, Pens.Green);
+        }
+
+        private void orangeToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            changeColour(1, Pens.Orange);
+        }
+
+        private void violetToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            changeColour(1, Pens.Violet);
+        }
+
+        private void noneToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            changeColour(1, null);
+        }
+        // end of block
+
+
     }
 }
