@@ -177,8 +177,6 @@ namespace evolutionSoccer
                     graphics.DrawLine(Pens.Black, new Point(negField - 4, y), new Point(negField + 4, y));         // y-beads       
                     graphics.DrawString(label, new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Regular), Brushes.Black, new Point(x - 8, y - 8)); // labels
                 }
-                // team labels
-                //graphics.DrawString("Matches", new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Regular), Brushes.Black, new Point(this.Width - 80, this.Height - negField - 20));
             }
             else if (maxY == 0)
             {
@@ -186,9 +184,30 @@ namespace evolutionSoccer
                 int x = negField - 4 - label.Length * 6;
                 int y = (this.Height - 38 - negField) - (this.Height - 98 - negField) * 9 / 10;
 
+                graphics.DrawLine(Pens.LightGray, new Point(this.Width, y), new Point(negField, y));              // coordinate grid
                 graphics.DrawLine(Pens.Black, new Point(negField - 4, y), new Point(negField + 4, y));                   
                 graphics.DrawString(label, new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Regular), Brushes.Black, new Point(x - 8, y - 8));
             }
+            //
+            // team labels
+            //
+            float size = negField / 4;
+            if (size < 10)
+                size = 10;
+            if (size > 20)
+                size = 20;
+            int shift = 2 * negField;
+            Pen tc1 = teamColour1 == null ? Pens.Black : teamColour1;
+            Pen tc2 = teamColour2 == null ? Pens.Black : teamColour2;
+            graphics.DrawString(_statsRecorder.name1, new Font(FontFamily.GenericSansSerif, size, FontStyle.Regular), tc1.Brush, new Point(shift, this.Height - negField - 20));
+            shift += _statsRecorder.name1.Length * Convert.ToInt32(size) * 2 / 3 + 15;
+            graphics.DrawString(Convert.ToString(_statsRecorder.wins1), new Font(FontFamily.GenericSansSerif, size, FontStyle.Regular), tc1.Brush, new Point(shift, this.Height - negField - 20));
+            shift += Convert.ToString(_statsRecorder.wins1).Length * Convert.ToInt32(size) * 2 / 3 + 15;
+            graphics.DrawString("-", new Font(FontFamily.GenericSansSerif, size, FontStyle.Regular), Brushes.Black, new Point(shift, this.Height - negField - 20));
+            shift += Convert.ToInt32(size) * 2 / 7 + 15;
+            graphics.DrawString(Convert.ToString(_statsRecorder.wins2), new Font(FontFamily.GenericSansSerif, size, FontStyle.Regular), tc2.Brush, new Point(shift, this.Height - negField - 20));
+            shift += Convert.ToString(_statsRecorder.wins2).Length * Convert.ToInt32(size) * 2 / 3 + 15;
+            graphics.DrawString(_statsRecorder.name2, new Font(FontFamily.GenericSansSerif, size, FontStyle.Regular), tc2.Brush, new Point(shift, this.Height - negField - 20));
         }
 
         // draw a line about the coordinate system, not the form

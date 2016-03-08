@@ -7,6 +7,10 @@ namespace evolutionSoccer
         // recordStats method in class Season
         // should be used as a property or a field of class Season
 
+        public string name1 { get; set; }
+        public string name2 { get; set; }
+        public int wins1 { get; set; }
+        public int wins2 { get; set; }
         public int[] matchesPlayed { get; set; }
         public int[,] teamStrength { get; set;}
         public int[,] wins { get; set; }
@@ -30,6 +34,10 @@ namespace evolutionSoccer
             wins = new int[2, c];
             draws = new int[c];
             looseStreak = new int[2, c];
+            name1 = "Untitled";
+            name2 = "Untitled";
+            wins1 = 0;
+            wins2 = 0;
         }
     }
 }

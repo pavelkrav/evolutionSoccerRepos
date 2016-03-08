@@ -20,7 +20,10 @@ namespace evolutionSoccer
             team[1] = new Team(team2, 15, 5); // initial conditions
             printTeams("(at the beginning of the season):");
             _statsRecorder = new StatsRecorder(totalMatches);
+
             recordStats();
+            _statsRecorder.name1 = team[0].name;
+            _statsRecorder.name2 = team[1].name;
         }
 
         // stats recording method
@@ -109,7 +112,10 @@ namespace evolutionSoccer
             simulateSeries(totalMatches);
             printTeams("(at the ending of the season):");
             printScore();
-            recordStats();            
+
+            recordStats();
+            _statsRecorder.wins1 = team[0].wins;
+            _statsRecorder.wins2 = team[1].wins;
         }
 
     }
