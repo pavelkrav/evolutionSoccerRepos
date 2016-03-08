@@ -33,24 +33,25 @@
             this.clearGraphsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.teamStrengthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.winsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.drawsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colourToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.team1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.team2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.greenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.violetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.team2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blueToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.redToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.greenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.orangeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.violetToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.noneToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openGuideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.looseStreakToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,7 +73,8 @@
             this.clearGraphsToolStripMenuItem,
             this.teamStrengthToolStripMenuItem,
             this.winsToolStripMenuItem,
-            this.drawsToolStripMenuItem});
+            this.drawsToolStripMenuItem,
+            this.looseStreakToolStripMenuItem});
             this.graphsToolStripMenuItem.Name = "graphsToolStripMenuItem";
             this.graphsToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.graphsToolStripMenuItem.Text = "Graphs";
@@ -97,21 +99,6 @@
             this.winsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.winsToolStripMenuItem.Text = "Wins";
             this.winsToolStripMenuItem.Click += new System.EventHandler(this.winsToolStripMenuItem_Click);
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openGuideToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // openGuideToolStripMenuItem
-            // 
-            this.openGuideToolStripMenuItem.Name = "openGuideToolStripMenuItem";
-            this.openGuideToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.openGuideToolStripMenuItem.Text = "Open guide";
-            this.openGuideToolStripMenuItem.Click += new System.EventHandler(this.openGuideToolStripMenuItem_Click);
             // 
             // drawsToolStripMenuItem
             // 
@@ -141,19 +128,6 @@
             this.team1ToolStripMenuItem.Name = "team1ToolStripMenuItem";
             this.team1ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.team1ToolStripMenuItem.Text = "Team 1";
-            // 
-            // team2ToolStripMenuItem
-            // 
-            this.team2ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.blueToolStripMenuItem1,
-            this.redToolStripMenuItem1,
-            this.greenToolStripMenuItem1,
-            this.orangeToolStripMenuItem1,
-            this.violetToolStripMenuItem1,
-            this.noneToolStripMenuItem1});
-            this.team2ToolStripMenuItem.Name = "team2ToolStripMenuItem";
-            this.team2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.team2ToolStripMenuItem.Text = "Team 2";
             // 
             // blueToolStripMenuItem
             // 
@@ -197,47 +171,82 @@
             this.noneToolStripMenuItem.Text = "None";
             this.noneToolStripMenuItem.Click += new System.EventHandler(this.noneToolStripMenuItem_Click);
             // 
+            // team2ToolStripMenuItem
+            // 
+            this.team2ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.blueToolStripMenuItem1,
+            this.redToolStripMenuItem1,
+            this.greenToolStripMenuItem1,
+            this.orangeToolStripMenuItem1,
+            this.violetToolStripMenuItem1,
+            this.noneToolStripMenuItem1});
+            this.team2ToolStripMenuItem.Name = "team2ToolStripMenuItem";
+            this.team2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.team2ToolStripMenuItem.Text = "Team 2";
+            // 
             // blueToolStripMenuItem1
             // 
             this.blueToolStripMenuItem1.Name = "blueToolStripMenuItem1";
-            this.blueToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.blueToolStripMenuItem1.Size = new System.Drawing.Size(113, 22);
             this.blueToolStripMenuItem1.Text = "Blue";
             this.blueToolStripMenuItem1.Click += new System.EventHandler(this.blueToolStripMenuItem1_Click);
             // 
             // redToolStripMenuItem1
             // 
             this.redToolStripMenuItem1.Name = "redToolStripMenuItem1";
-            this.redToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.redToolStripMenuItem1.Size = new System.Drawing.Size(113, 22);
             this.redToolStripMenuItem1.Text = "Red";
             this.redToolStripMenuItem1.Click += new System.EventHandler(this.redToolStripMenuItem1_Click);
             // 
             // greenToolStripMenuItem1
             // 
             this.greenToolStripMenuItem1.Name = "greenToolStripMenuItem1";
-            this.greenToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.greenToolStripMenuItem1.Size = new System.Drawing.Size(113, 22);
             this.greenToolStripMenuItem1.Text = "Green";
             this.greenToolStripMenuItem1.Click += new System.EventHandler(this.greenToolStripMenuItem1_Click);
             // 
             // orangeToolStripMenuItem1
             // 
             this.orangeToolStripMenuItem1.Name = "orangeToolStripMenuItem1";
-            this.orangeToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.orangeToolStripMenuItem1.Size = new System.Drawing.Size(113, 22);
             this.orangeToolStripMenuItem1.Text = "Orange";
             this.orangeToolStripMenuItem1.Click += new System.EventHandler(this.orangeToolStripMenuItem1_Click);
             // 
             // violetToolStripMenuItem1
             // 
             this.violetToolStripMenuItem1.Name = "violetToolStripMenuItem1";
-            this.violetToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.violetToolStripMenuItem1.Size = new System.Drawing.Size(113, 22);
             this.violetToolStripMenuItem1.Text = "Violet";
             this.violetToolStripMenuItem1.Click += new System.EventHandler(this.violetToolStripMenuItem1_Click);
             // 
             // noneToolStripMenuItem1
             // 
             this.noneToolStripMenuItem1.Name = "noneToolStripMenuItem1";
-            this.noneToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.noneToolStripMenuItem1.Size = new System.Drawing.Size(113, 22);
             this.noneToolStripMenuItem1.Text = "None";
             this.noneToolStripMenuItem1.Click += new System.EventHandler(this.noneToolStripMenuItem1_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openGuideToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // openGuideToolStripMenuItem
+            // 
+            this.openGuideToolStripMenuItem.Name = "openGuideToolStripMenuItem";
+            this.openGuideToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openGuideToolStripMenuItem.Text = "Open guide";
+            this.openGuideToolStripMenuItem.Click += new System.EventHandler(this.openGuideToolStripMenuItem_Click);
+            // 
+            // looseStreakToolStripMenuItem
+            // 
+            this.looseStreakToolStripMenuItem.Name = "looseStreakToolStripMenuItem";
+            this.looseStreakToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.looseStreakToolStripMenuItem.Text = "Loose streak";
+            this.looseStreakToolStripMenuItem.Click += new System.EventHandler(this.looseStreakToolStripMenuItem_Click);
             // 
             // GraphicsForm
             // 
@@ -281,5 +290,6 @@
         private System.Windows.Forms.ToolStripMenuItem orangeToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem violetToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem looseStreakToolStripMenuItem;
     }
 }

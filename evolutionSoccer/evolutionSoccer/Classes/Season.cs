@@ -39,6 +39,9 @@ namespace evolutionSoccer
                 _statsRecorder.wins[1, i] = team[1].wins;
 
                 _statsRecorder.draws[i] = wins[2];
+
+                _statsRecorder.looseStreak[0, i] = team[0].looseStreak;
+                _statsRecorder.looseStreak[1, i] = team[1].looseStreak;
                 //...
             }
 

@@ -36,7 +36,7 @@ namespace evolutionSoccer
             teamColour2 = Pens.Red;
             lastGraph = (teamColour1, teamColour2) =>
             {
-                drawCross("clear");
+                drawCross();
             };
         }
 
@@ -51,7 +51,7 @@ namespace evolutionSoccer
             teamColour2 = Pens.Red;
             lastGraph = (teamColour1, teamColour2) =>
             {
-                drawCross("clear");
+                drawCross();
             };
         }
 
@@ -66,10 +66,10 @@ namespace evolutionSoccer
             Console.WriteLine("Closing graphs form.");
         }
 
-        protected override void OnPaint(PaintEventArgs e)
+        protected override void OnShown(EventArgs e)
         {
-            base.OnPaint(e);
-            drawCross("none");
+            base.OnShown(e);
+            drawCross();
         }
 
         protected override void OnSizeChanged(EventArgs e)
@@ -78,17 +78,13 @@ namespace evolutionSoccer
             if (lastGraph != null)
                 lastGraph(teamColour1, teamColour2);
             else
-                drawCross("clear");
+                drawCross();
         }
 
-        private void drawCross(String arg)
+        private void drawCross()
         {
             System.Drawing.Graphics graphics = this.CreateGraphics();
-
-            // dont need form clearing on paint
-            if (arg == "clear")
-                graphics.Clear(Color.White);
-
+            graphics.Clear(Color.White);
             // remold negative field in case of window size changing
             negField = negativeField();
             // y-axis
@@ -97,6 +93,42 @@ namespace evolutionSoccer
             graphics.DrawLine(System.Drawing.Pens.Black, new Point(0, this.Height - 38 - negField), new Point(this.Width, this.Height - 38 - negField)); // x axis
 
             drawXaxisLabels();
+        }
+
+        private void drawCross(int[] statsArray)
+        {
+            drawCross();
+            int maxY = 0;
+            if (statsArray.GetLength(0) > 0)
+            {
+                maxY = statsArray[0];
+                for (int i = 0; i < statsArray.GetLength(0); i++)
+                {
+                    if (maxY < statsArray[i])
+                        maxY = statsArray[i];
+                }
+            }
+
+            drawYaxisLabels(maxY);
+        }
+
+        private void drawCross(int[,] statsArray)
+        {
+            drawCross();
+            int maxY = 0;
+            if (statsArray.GetLength(0) > 0 && statsArray.GetLength(1) > 0)
+            {
+                maxY = statsArray[0, 0];
+                for (int i = 0; i < statsArray.GetLength(1); i++)
+                {
+                    if (maxY < statsArray[0, i])
+                        maxY = statsArray[0, i];
+                    if (maxY < statsArray[1, i])
+                        maxY = statsArray[1, i];
+                }
+            }
+
+            drawYaxisLabels(maxY);
         }
 
         // x-axis labels
@@ -115,8 +147,9 @@ namespace evolutionSoccer
                     int x = (this.Width - negField) * (i + 1) / 10 + negField;
                     int y = this.Height - 32 - negField;
 
-                    graphics.DrawLine(Pens.Black, new Point(x, this.Height - negField - 34), new Point(x, this.Height - negField - 42)); // x-beads                                        
-                    graphics.DrawString(label, new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Regular), Brushes.Black, new Point(x - 4 * label.Length, y));
+                    graphics.DrawLine(Pens.LightGray, new Point(x, this.Height - 38 - negField), new Point(x, 0));                      // coordinate grid    
+                    graphics.DrawLine(Pens.Black, new Point(x, this.Height - negField - 34), new Point(x, this.Height - negField - 42)); // x-beads                                    
+                    graphics.DrawString(label, new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Regular), Brushes.Black, new Point(x - 4 * label.Length, y)); // labels
                 }
             }
             //zero point label
@@ -140,9 +173,12 @@ namespace evolutionSoccer
                     int x = negField - 4 - label.Length * 6;
                     int y = (this.Height - 38 - negField) - (this.Height - 98 - negField) * (i + 1) / 10;
 
-                    graphics.DrawLine(Pens.Black, new Point(negField - 4, y), new Point(negField + 4, y));         // y-beads           
-                    graphics.DrawString(label, new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Regular), Brushes.Black, new Point(x - 8, y - 8));
+                    graphics.DrawLine(Pens.LightGray, new Point(this.Width, y), new Point(negField, y));              // coordinate grid
+                    graphics.DrawLine(Pens.Black, new Point(negField - 4, y), new Point(negField + 4, y));         // y-beads       
+                    graphics.DrawString(label, new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Regular), Brushes.Black, new Point(x - 8, y - 8)); // labels
                 }
+                // team labels
+                //graphics.DrawString("Matches", new Font(FontFamily.GenericSansSerif, 10.0F, FontStyle.Regular), Brushes.Black, new Point(this.Width - 80, this.Height - negField - 20));
             }
             else if (maxY == 0)
             {
@@ -179,8 +215,6 @@ namespace evolutionSoccer
                         maxY = statsArray[1, i];
                 }
 
-                drawYaxisLabels(maxY);
-
                 double ratioX = 1.0 * (this.Width - negField) / _statsRecorder.matchesPlayed[_statsRecorder.currentRecords - 1];
                 double ratioY = 0;
                 if (maxY > 0)
@@ -202,8 +236,6 @@ namespace evolutionSoccer
                     if (maxY < statsArray[i])
                         maxY = statsArray[i];
                 }
-
-                drawYaxisLabels(maxY);
 
                 double ratioX = 1.0 * (this.Width - negField) / _statsRecorder.matchesPlayed[_statsRecorder.currentRecords - 1];
                 double ratioY = 0;
@@ -237,16 +269,29 @@ namespace evolutionSoccer
             drawGraph(_statsRecorder.draws, colour);
         }
 
+        private void drawLooseStreakGraph(int teamNumber, Pen colour)
+        {
+            if (teamNumber < _statsRecorder.looseStreak.GetLength(0) && teamNumber >= 0)
+            {
+                drawGraph(_statsRecorder.looseStreak, teamNumber, colour);
+            }
+        }
+
         private void clearGraphsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawCross("clear");
+            lastGraph = (teamColour1, teamColour2) =>
+            {
+                drawCross();
+            };
+            Console.WriteLine("Graphs are cleared");
+            lastGraph(teamColour1, teamColour2);
         }
 
         private void teamStrengthToolStripMenuItem_Click(object sender, EventArgs e)
         {
             lastGraph = (teamColour1, teamColour2) =>
             {
-                drawCross("clear");
+                drawCross(_statsRecorder.teamStrength);
                 drawTeamStrengthGraph(0, teamColour1);
                 drawTeamStrengthGraph(1, teamColour2);
             };
@@ -254,18 +299,11 @@ namespace evolutionSoccer
             lastGraph(teamColour1, teamColour2);
         }
 
-        private void openGuideToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //string path = AppDomain.CurrentDomain.BaseDirectory;
-            //Console.WriteLine(path);
-            Process.Start("..\\..\\info\\Guide.txt");
-        }
-
         private void winsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             lastGraph = (teamColour1, teamColour2) =>
             {
-                drawCross("clear");
+                drawCross(_statsRecorder.wins);
                 drawWinsGraph(0, teamColour1);
                 drawWinsGraph(1, teamColour2);
             };
@@ -277,7 +315,7 @@ namespace evolutionSoccer
         {
             lastGraph = (teamColour1, teamColour2) =>
             {
-                drawCross("clear");
+                drawCross(_statsRecorder.draws);
                 if (teamColour1 != null)
                     drawDrawsGraph(teamColour1);
                 else if (teamColour2 != null)
@@ -288,8 +326,28 @@ namespace evolutionSoccer
             lastGraph(teamColour1, teamColour2);
         }
 
+        private void looseStreakToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lastGraph = (teamColour1, teamColour2) =>
+            {
+                drawCross(_statsRecorder.looseStreak);
+                drawLooseStreakGraph(0, teamColour1);
+                drawLooseStreakGraph(1, teamColour2);
+            };
+            Console.WriteLine("Building graph showing loose streaks through simulated matches");
+            lastGraph(teamColour1, teamColour2);
+        }
 
+        private void openGuideToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //string path = AppDomain.CurrentDomain.BaseDirectory;
+            //Console.WriteLine(path);
+            Process.Start("..\\..\\info\\Guide.txt");
+        }
+
+        //
         // block of code that provides changing graphs' colours
+        //
         private void changeColour(int teamNumber, Pen colour)
         {
             if (teamNumber == 0)
@@ -301,8 +359,9 @@ namespace evolutionSoccer
             lastGraph(teamColour1, teamColour2);
         }
 
-
-
+        //
+        // Team 1
+        //
         private void blueToolStripMenuItem_Click(object sender, EventArgs e)
         {
             changeColour(0, Pens.Blue);
@@ -333,8 +392,9 @@ namespace evolutionSoccer
             changeColour(0, null);
         }
 
-
-
+        //
+        //Team 2
+        //
         private void blueToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             changeColour(1, Pens.Blue);
@@ -364,8 +424,9 @@ namespace evolutionSoccer
         {
             changeColour(1, null);
         }
+        //
         // end of block
-
+        //
 
     }
 }
